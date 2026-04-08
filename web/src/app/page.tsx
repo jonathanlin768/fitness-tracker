@@ -79,13 +79,18 @@ export default function Home() {
           </div>
           <div className="bg-primary/5 rounded-lg p-4 text-center">
             <p className="text-2xl font-bold text-primary">
-              {workouts.reduce((sum, w) => sum + w.cardio, 0)}
+              {workouts.reduce((sum, w) => sum + (w.cardio || 0), 0)}
             </p>
             <p className="text-xs text-muted-foreground mt-1">有氧总时长(分)</p>
           </div>
           <div className="bg-primary/5 rounded-lg p-4 text-center">
             <p className="text-2xl font-bold text-primary">
-              {Math.round(workouts.reduce((sum, w) => sum + w.cardio, 0) / (workouts.length || 1))}
+              {(() => {
+                const cardioWorkouts = workouts.filter(w => (w.cardio || 0) > 0);
+                if (cardioWorkouts.length === 0) return 0;
+                const totalCardio = cardioWorkouts.reduce((sum, w) => sum + (w.cardio || 0), 0);
+                return Math.round(totalCardio / cardioWorkouts.length);
+              })()}
             </p>
             <p className="text-xs text-muted-foreground mt-1">平均有氧(分)</p>
           </div>
@@ -95,8 +100,8 @@ export default function Home() {
         <div className="space-y-4">
           <h2 className="text-lg font-semibold">训练记录</h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {workouts.map((workout) => (
-              <WorkoutCard key={workout.date} workout={workout} />
+            {workouts.map((workout, index) => (
+              <WorkoutCard key={`${workout.date}-${index}`} workout={workout} />
             ))}
           </div>
         </div>

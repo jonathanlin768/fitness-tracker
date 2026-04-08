@@ -94,8 +94,11 @@ export default function AnalysisPage() {
           <div className="bg-primary/5 rounded-lg p-4">
             <p className="text-xs text-muted-foreground">平均有氧</p>
             <p className="text-xl font-bold text-primary mt-1">
-              {Math.round(statsData.reduce((sum, s) => sum + s.cardio, 0) / 
-                (statsData.reduce((sum, s) => sum + s.workouts, 0) || 1))} 分
+              {(() => {
+                const totalCardio = statsData.reduce((sum, s) => sum + s.cardio, 0);
+                const cardioWorkouts = workouts.filter(w => (w.cardio || 0) > 0).length;
+                return cardioWorkouts > 0 ? Math.round(totalCardio / cardioWorkouts) : 0;
+              })()} 分
             </p>
           </div>
           <div className="bg-primary/5 rounded-lg p-4">

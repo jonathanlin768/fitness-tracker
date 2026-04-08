@@ -24,7 +24,7 @@ export function getWeeklyStats(workouts: Workout[]): StatsData[] {
     const weekKey = getWeekKey(new Date(workout.date));
     if (statsMap.has(weekKey)) {
       const current = statsMap.get(weekKey)!;
-      current.cardio += workout.cardio;
+      current.cardio += (workout.cardio || 0);
       current.workouts += 1;
     }
   });
@@ -52,7 +52,7 @@ export function getMonthlyStats(workouts: Workout[]): StatsData[] {
     const monthKey = getMonthKey(new Date(workout.date));
     if (statsMap.has(monthKey)) {
       const current = statsMap.get(monthKey)!;
-      current.cardio += workout.cardio;
+      current.cardio += (workout.cardio || 0);
       current.workouts += 1;
     }
   });
@@ -79,7 +79,7 @@ export function getYearlyStats(workouts: Workout[]): StatsData[] {
     const year = workout.date.split("-")[0];
     if (statsMap.has(year)) {
       const current = statsMap.get(year)!;
-      current.cardio += workout.cardio;
+      current.cardio += (workout.cardio || 0);
       current.workouts += 1;
     }
   });

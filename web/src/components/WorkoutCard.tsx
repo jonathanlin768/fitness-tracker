@@ -73,19 +73,21 @@ export function WorkoutCard({ workout }: WorkoutCardProps) {
           </div>
         )}
 
-        {/* Cardio Section */}
-        <div className="flex flex-col gap-2">
-          <div className="flex items-center gap-1.5">
-            <Flame className="h-4 w-4 text-orange-500" />
-            <span className="text-sm font-semibold">有氧运动</span>
+        {/* Cardio Section - hidden when relax is true */}
+        {!workout.relax && (
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-1.5">
+              <Flame className="h-4 w-4 text-orange-500" />
+              <span className="text-sm font-semibold">有氧运动</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Timer className="h-3.5 w-3.5 text-muted-foreground" />
+              <span className="text-sm text-muted-foreground">
+                {workout.cardio > 0 ? `${workout.cardio} 分钟` : "无"}
+              </span>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <Timer className="h-3.5 w-3.5 text-muted-foreground" />
-            <span className="text-sm text-muted-foreground">
-              {workout.cardio > 0 ? `${workout.cardio} 分钟` : "无"}
-            </span>
-          </div>
-        </div>
+        )}
 
         {/* Relax Section */}
         {workout.relax && (
