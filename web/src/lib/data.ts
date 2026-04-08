@@ -1,7 +1,7 @@
 import { Workout, TimeRange, StatsData, MuscleFrequency } from "@/types/workout";
 
 export async function getWorkouts(): Promise<Workout[]> {
-  const response = await fetch("./data/workouts.json");
+  const response = await fetch("/data/workouts.json");
   const data = await response.json();
   return data.sort((a: Workout, b: Workout) => 
     new Date(b.date).getTime() - new Date(a.date).getTime()
