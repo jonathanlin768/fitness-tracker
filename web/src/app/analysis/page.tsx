@@ -25,7 +25,6 @@ export default function AnalysisPage() {
 
   const statsData = getStatsByTimeRange(workouts, timeRange);
   const muscleFrequency = countMuscleFrequency(workouts, timeRange);
-
   const timeRangeLabels: Record<TimeRange, string> = {
     week: "近8周",
     month: "近6个月",
@@ -45,7 +44,7 @@ export default function AnalysisPage() {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-14 items-center justify-between px-4">
+        <div className="container mx-auto flex h-14 items-center justify-between px-4">
           <div className="flex items-center gap-3">
             <Link href="/">
               <Button variant="ghost" size="icon" className="h-8 w-8">
@@ -61,7 +60,7 @@ export default function AnalysisPage() {
       </header>
 
       {/* Main Content */}
-      <main className="container px-4 py-6">
+      <main className="container mx-auto px-4 py-6">
         {/* Time Range Selector */}
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-3">
@@ -96,8 +95,8 @@ export default function AnalysisPage() {
             <p className="text-xl font-bold text-primary mt-1">
               {(() => {
                 const totalCardio = statsData.reduce((sum, s) => sum + s.cardio, 0);
-                const cardioWorkouts = workouts.filter(w => (w.cardio || 0) > 0).length;
-                return cardioWorkouts > 0 ? Math.round(totalCardio / cardioWorkouts) : 0;
+                const hasCardios = statsData.reduce((sum, s) => sum + s.hasCardios, 0);
+                return hasCardios > 0 ? Math.round(totalCardio / hasCardios) : 0;
               })()} 分
             </p>
           </div>

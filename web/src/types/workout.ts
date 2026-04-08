@@ -13,6 +13,7 @@ export type StatsData = {
   label: string;
   cardio: number;
   workouts: number;
+  hasCardios: number;
 };
 
 export type MuscleFrequency = {

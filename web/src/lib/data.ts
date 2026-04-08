@@ -9,7 +9,7 @@ export async function getWorkouts(): Promise<Workout[]> {
 }
 
 export function getWeeklyStats(workouts: Workout[]): StatsData[] {
-  const statsMap = new Map<string, { cardio: number; workouts: number }>();
+  const statsMap = new Map<string, { cardio: number; workouts: number; hasCardios: number }>();
   
   // Get the last 8 weeks
   const now = new Date();
@@ -17,7 +17,7 @@ export function getWeeklyStats(workouts: Workout[]): StatsData[] {
     const d = new Date(now);
     d.setDate(d.getDate() - i * 7);
     const weekKey = getWeekKey(d);
-    statsMap.set(weekKey, { cardio: 0, workouts: 0 });
+    statsMap.set(weekKey, { cardio: 0, workouts: 0, hasCardios: 0 });
   }
   
   workouts.forEach(workout => {
@@ -26,6 +26,7 @@ export function getWeeklyStats(workouts: Workout[]): StatsData[] {
       const current = statsMap.get(weekKey)!;
       current.cardio += (workout.cardio || 0);
       current.workouts += 1;
+      current.hasCardios += (workout.cardio && workout.cardio > 0) ? 1 : 0;
     }
   });
   
@@ -33,11 +34,12 @@ export function getWeeklyStats(workouts: Workout[]): StatsData[] {
     label,
     cardio: data.cardio,
     workouts: data.workouts,
+    hasCardios: data.hasCardios
   }));
 }
 
 export function getMonthlyStats(workouts: Workout[]): StatsData[] {
-  const statsMap = new Map<string, { cardio: number; workouts: number }>();
+  const statsMap = new Map<string, { cardio: number; workouts: number; hasCardios: number }>();
   
   // Get the last 6 months
   const now = new Date();
@@ -45,7 +47,7 @@ export function getMonthlyStats(workouts: Workout[]): StatsData[] {
     const d = new Date(now);
     d.setMonth(d.getMonth() - i);
     const monthKey = getMonthKey(d);
-    statsMap.set(monthKey, { cardio: 0, workouts: 0 });
+    statsMap.set(monthKey, { cardio: 0, workouts: 0, hasCardios: 0 });
   }
   
   workouts.forEach(workout => {
@@ -54,6 +56,7 @@ export function getMonthlyStats(workouts: Workout[]): StatsData[] {
       const current = statsMap.get(monthKey)!;
       current.cardio += (workout.cardio || 0);
       current.workouts += 1;
+        current.hasCardios += (workout.cardio && workout.cardio > 0) ? 1 : 0;
     }
   });
   
@@ -61,18 +64,19 @@ export function getMonthlyStats(workouts: Workout[]): StatsData[] {
     label,
     cardio: data.cardio,
     workouts: data.workouts,
+    hasCardios: data.hasCardios
   }));
 }
 
 export function getYearlyStats(workouts: Workout[]): StatsData[] {
-  const statsMap = new Map<string, { cardio: number; workouts: number }>();
+  const statsMap = new Map<string, { cardio: number; workouts: number; hasCardios: number }>();
   
   // Get all years from data
   const years = new Set(workouts.map(w => w.date.split("-")[0]));
   const sortedYears = Array.from(years).sort();
   
   sortedYears.forEach(year => {
-    statsMap.set(year, { cardio: 0, workouts: 0 });
+    statsMap.set(year, { cardio: 0, workouts: 0, hasCardios: 0 });
   });
   
   workouts.forEach(workout => {
@@ -81,6 +85,7 @@ export function getYearlyStats(workouts: Workout[]): StatsData[] {
       const current = statsMap.get(year)!;
       current.cardio += (workout.cardio || 0);
       current.workouts += 1;
+      current.hasCardios += (workout.cardio && workout.cardio > 0) ? 1 : 0;
     }
   });
   
@@ -88,6 +93,7 @@ export function getYearlyStats(workouts: Workout[]): StatsData[] {
     label,
     cardio: data.cardio,
     workouts: data.workouts,
+    hasCardios: data.hasCardios,
   }));
 }
 
