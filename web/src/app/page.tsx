@@ -55,7 +55,7 @@ export default function Home() {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-14 items-center justify-between px-4">
+        <div className="container mx-auto flex h-14 items-center justify-between px-4">
           <div className="flex items-center gap-2">
             <Dumbbell className="h-6 w-6 text-primary" />
             <h1 className="text-lg font-semibold">健身追踪</h1>
@@ -70,7 +70,7 @@ export default function Home() {
       </header>
 
       {/* Main Content */}
-      <main className="container px-4 py-6">
+      <main className="container mx-auto px-4 py-6">
         {/* Summary Stats */}
         <div className="grid grid-cols-3 gap-4 mb-6">
           <div className="bg-primary/5 rounded-lg p-4 text-center">
