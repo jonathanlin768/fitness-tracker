@@ -9,7 +9,8 @@ import {
   CalendarDays, 
   Flame,
   Timer,
-  StickyNote
+  StickyNote,
+  Sparkles
 } from "lucide-react";
 
 interface WorkoutCardProps {
@@ -85,6 +86,21 @@ export function WorkoutCard({ workout }: WorkoutCardProps) {
             </span>
           </div>
         </div>
+
+        {/* Relax Section */}
+        {workout.relax && (
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-1.5">
+              <Sparkles className="h-4 w-4 text-teal-500" />
+              <span className="text-sm font-semibold">拉伸课</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="inline-flex items-center rounded-md bg-teal-50 px-2 py-1 text-xs font-semibold text-teal-700 ring-1 ring-inset ring-teal-200">
+                有
+              </span>
+            </div>
+          </div>
+        )}
 
         {/* Raw Note Section (if exists) */}
         {workout.raw && (

@@ -4,6 +4,7 @@ export type Workout = {
   abs: string[];         // e.g., ["上腹", "下腹"]
   cardio: number;        // duration in minutes
   raw?: string;          // original text input
+  relax?: boolean;       // stretching class
 };
 
 export type TimeRange = 'week' | 'month' | 'year';
